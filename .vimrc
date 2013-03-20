@@ -73,6 +73,9 @@ map j gj
 map k gk
 
 
+"auto close 
+imap {} {<cr>}<ESC>O
+
 
 " Smart way to move between windows
 map <C-j> <C-W>j

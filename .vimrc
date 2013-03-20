@@ -1,48 +1,45 @@
 " VIM Configuration File
-" Description: Optimized for C/C++ development, but useful also for other things.
-" Author: Gerhard Gappmeier
+"
 "
 
-
-
+"""""""""""""""""""""""""""""""""""""""
+"
+"  1. Basic settings
+"
+"""""""""""""""""""""""""""""""""""""""
+"
 " Use pathogen to easily modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
-
+"
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+"
 
-
+" Fast saving
+nmap <leader>w :w!<cr>
+"
 " set UTF-8 encoding
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-" disable vi compatibility (emulation of old bugs)
 set nocompatible
-" use indentation of previous line
 set autoindent
-" use intelligent indentation for C
 set smartindent
-" configure tabwidth and insert spaces instead of tabs
 set tabstop=4        " tab width is 4 spaces
 set shiftwidth=4     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
-" wrap lines at 120 chars. 80 is somewaht antiquated with nowadays displays.
 set textwidth=120
-" turn syntax highlighting on
 set t_Co=256
+filetype plugin indent on
 syntax on
 colorscheme transparent
 "wombat256
-" turn line numbers on
 set number
-" highlight matching braces
 set showmatch
-" intelligent comments
 set comments=sl:/*,mb:\ *,elx:\ */
-" use intelligent file completion like in the bash
 set wildmode=longest:full
 set wildmenu
 
@@ -50,14 +47,80 @@ set hidden
 
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
+set smartcase
+set magic
 
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak
 set title                " change the terminal's title
+
+
+" No sounds 
 set visualbell           " don't beep
 set noerrorbells         " don't beep
+
+
+" No backup No swap files
+set nobackup
+set nowb
+set noswapfile
+
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+
+
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+" Always show the status line
+set laststatus=2
+
+"Format the status line
+set statusline=\ %{&paste}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Move a line of text using leader+[jk] 
+nmap <leader>j mz:m+<cr>`z
+nmap <leader>k mz:m-2<cr>`z
+vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
+vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
+
+
+
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+
 
 " Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
 " This offers intelligent C++ completion when typing '.' '->' or <C-o>

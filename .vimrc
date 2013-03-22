@@ -53,7 +53,7 @@ set magic
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
-set wildignore=*.swp,*.bak
+set wildignore=*.swp,*.bak,*/app/cache/*
 set title                " change the terminal's title
 
 
@@ -77,20 +77,8 @@ map k gk
 imap {} {<cr>}<ESC>O
 
 
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-
-
+set nocursorline
+nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -112,29 +100,48 @@ nmap <leader>k mz:m-2<cr>`z
 vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
 vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
+nnoremap <leader>h :e~/.vim/help<cr>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Windows explore
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+noremap <leader>e :Vexplore<CR>
+noremap <leader>q :q<CR>
+noremap <leader>= 10<C-W>+
+noremap <leader>- 10<C-W>-
+
+
+"""""""""""""""""""""""""""""
+" => grep current word
+" """""""""""""""""""""""""""
+nnoremap gr :Ack '\b<cword>\b' *<CR>
 
 
 " Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
 " This offers intelligent C++ completion when typing '.' '->' or <C-o>
 " Load standard tag files
-set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/tags/gl
-set tags+=~/.vim/tags/sdl
-set tags+=~/.vim/tags/qt4
-set tags+=~/work/sidust/tags
-set tags+=~/work/opcua/tags
-set tags+=~/work/Performance_4149/miniweb/tags
+"set tags+=~/.vim/tags/cpp
+"set tags+=~/.vim/tags/gl
+"set tags+=~/.vim/tags/sdl
+"set tags+=~/.vim/tags/qt4
+"set tags+=~/work/sidust/tags
+"set tags+=~/work/opcua/tags
+"set tags+=~/work/Performance_4149/miniweb/tags
 set tags+=~/.vim/tags/php
 
 " Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987

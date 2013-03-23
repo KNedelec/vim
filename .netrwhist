@@ -1,4 +1,11 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/home/kevin/projects/sage/www-fr/src/Sage/Bundle/PivotBundle/Command'
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/etc/apache2/sites-available'
 let g:netrw_dirhist_2='/home/freckz/.vim'
+let g:netrw_dirhist_3='/home/freckz'
+let g:netrw_dirhist_4='/home/freckz/projects'
+let g:netrw_dirhist_5='/home/freckz/projects/Square'
+let g:netrw_dirhist_6='/home/freckz/projects/Square/src'
+let g:netrw_dirhist_7='/home/freckz/projects/Square/src/Acme'
+let g:netrw_dirhist_8='/home/freckz/projects/Square/src/Acme/DemoBundle'
+let g:netrw_dirhist_9='/home/freckz/projects/Square/src/Acme/DemoBundle/Controller'

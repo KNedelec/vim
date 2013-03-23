@@ -36,10 +36,9 @@ set textwidth=120
 set t_Co=256
 filetype plugin indent on
 syntax on
-set background=dark
-"colorscheme solarized
-"colorscheme transparent
-colorscheme github
+let g:solarized_termcolors=256
+set background=light
+colorscheme transparent
 set number
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
@@ -107,6 +106,9 @@ vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 nnoremap <leader>h :e~/.vim/help<cr>
 
+" replace word
+nnoremap X ciw
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Windows explore
@@ -138,6 +140,33 @@ noremap <leader>< 20<C-W><
 nnoremap gr :Ack '\b<cword>\b' *<CR>
 
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" CtrlP 
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" size for response
+let g:ctrlp_max_height = 40
+" reuse cache between sessions
+let g:ctrlp_clear_cache_on_exit = 0
+" search inside hidden files and folders
+let g:ctrlp_show_hidden = 1
+" number of files to scan, 0=no limit
+let g:ctrlp_max_files = 0
+" max folder depth
+let g:ctrlp_max_depth = 0
+" opens ctrlp inside current working directory nearest root parent
+let g:ctrlp_working_path_mode = 'wr'
+let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+
+nnoremap <C-P>p :CtrlP<CR>
+nnoremap <C-P>, :CtrlPBufTag<CR>
+nnoremap <C-P>; :CtrlPMRUFiles<CR>
+nnoremap <C-P>m :CtrlPMixed<CR>
+nnoremap <C-P>l :CtrlPLine<CR>
+            
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
 "" PHP+ 
@@ -146,6 +175,7 @@ nnoremap gr :Ack '\b<cword>\b' *<CR>
 "
 autocmd FileType php set omnifunc=phpcomplete#Complete
 set tags+=~/.vim/tags/php
+set tags+=~/.vim/tags/phpt.tags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

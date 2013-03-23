@@ -3,3 +3,17 @@ visual explorer
 d: create new directory
 R: rename
 D: delete
+
+
+H M L // High Mid Low = bouge cursor haut de lecran, milieu, bas
+z<cr> zz z- //bouge ecran 
+
+
+<C-o> <C-i> // jump previous/next file
+
+
+`. last edit
+
+
+:ts show taglist
+:tn next tag

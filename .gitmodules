@@ -10,3 +10,6 @@
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
+[submodule "bundle/phpDocumentor"]
+	path = bundle/phpDocumentor
+	url = https://github.com/vim-scripts/PDV--phpDocumentor-for-Vim.git

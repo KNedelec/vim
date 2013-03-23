@@ -134,11 +134,41 @@ noremap <leader>- 10<C-W>-
 noremap <leader>> 20<C-W>>
 noremap <leader>< 20<C-W><
 
+
+" faster scrolling
+noremap <C-E> 3<C-E>
+noremap <C-Y> 3<C-Y>
+
+
 """""""""""""""""""""""""""""
 " => grep current word
 """""""""""""""""""""""""""""
 nnoremap gr :Ack '\b<cword>\b' *<CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" PHP 
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+autocmd FileType php set omnifunc=phpcomplete#Complete
+set tags+=~/.vim/tags/php
+set tags+=~/.vim/tags/phpt.tags
+
+"PHP PDV documentor
+" auto doc classes and properties
+" 
+inoremap <leader>d <ESC>:call PhpDocSingle()<CR>i 
+nnoremap <leader>d :call PhpDocSingle()<CR> 
+vnoremap <leader>d :call PhpDocRange()<CR> 
+
+let g:pdv_cfg_Author = "Kevin Nedelec <kevin.nedelec@ekino.com"
+let g:pdv_cfg_php4always = 0
+let g:pdv_cfg_Uses = 0
+let g:pdv_cfg_Version = ""
+let g:pdv_cfg_Copyright = ""
+let g:pdv_cfg_License = ""
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -167,15 +197,6 @@ nnoremap <C-P>m :CtrlPMixed<CR>
 nnoremap <C-P>l :CtrlPLine<CR>
             
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" PHP+ 
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-autocmd FileType php set omnifunc=phpcomplete#Complete
-set tags+=~/.vim/tags/php
-set tags+=~/.vim/tags/phpt.tags
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

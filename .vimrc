@@ -36,8 +36,10 @@ set textwidth=120
 set t_Co=256
 filetype plugin indent on
 syntax on
-colorscheme transparent
-"wombat256
+set background=dark
+"colorscheme solarized
+"colorscheme transparent
+colorscheme github
 set number
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
@@ -63,10 +65,10 @@ set visualbell           " don't beep
 set noerrorbells         " don't beep
 
 
-" No backup No swap files
+" No backup , swap files in /var/tmp
 set nobackup
 set nowb
-set noswapfile
+set directory=/var/tmp/
 
 "switch paste mode
 set pastetoggle=<F2>

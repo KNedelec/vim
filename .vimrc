@@ -152,23 +152,23 @@ nnoremap gr :Ack '\b<cword>\b' *<CR>
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-autocmd FileType php set omnifunc=phpcomplete#Complete
-set tags+=~/.vim/tags/php
-set tags+=~/.vim/tags/phpt.tags
+"autocmd FileType php set omnifunc=phpcomplete#Complete
+"set tags+=~/.vim/tags/php
+"set tags+=~/.vim/tags/phpt.tags
 
 "PHP PDV documentor
 " auto doc classes and properties
 " 
-inoremap <leader>d <ESC>:call PhpDocSingle()<CR>i 
-nnoremap <leader>d :call PhpDocSingle()<CR> 
-vnoremap <leader>d :call PhpDocRange()<CR> 
+"inoremap <leader>d <ESC>:call PhpDocSingle()<CR>i 
+"nnoremap <leader>d :call PhpDocSingle()<CR> 
+"vnoremap <leader>d :call PhpDocRange()<CR> 
 
-let g:pdv_cfg_Author = "Kevin Nedelec <kevin.nedelec@ekino.com"
-let g:pdv_cfg_php4always = 0
-let g:pdv_cfg_Uses = 0
-let g:pdv_cfg_Version = ""
-let g:pdv_cfg_Copyright = ""
-let g:pdv_cfg_License = ""
+"let g:pdv_cfg_Author = "Kevin Nedelec <kevin.nedelec@gmail.com"
+"let g:pdv_cfg_php4always = 0
+"let g:pdv_cfg_Uses = 0
+"let g:pdv_cfg_Version = ""
+"let g:pdv_cfg_Copyright = ""
+"let g:pdv_cfg_License = ""
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -176,19 +176,19 @@ nnoremap gr :Ack '\b<cword>\b' *<CR>
 "" CtrlP 
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" size for response
+"" size for response
 let g:ctrlp_max_height = 40
-" reuse cache between sessions
-let g:ctrlp_clear_cache_on_exit = 0
-" search inside hidden files and folders
+"" reuse cache between sessions
+let g:ctrlp_clear_cache_on_exit = 1
+"" search inside hidden files and folders
 let g:ctrlp_show_hidden = 1
-" number of files to scan, 0=no limit
+"" number of files to scan, 0=no limit
 let g:ctrlp_max_files = 0
-" max folder depth
-let g:ctrlp_max_depth = 0
-" opens ctrlp inside current working directory nearest root parent
-let g:ctrlp_working_path_mode = 'wr'
-let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+"" max folder depth
+let g:ctrlp_max_depth = 1000
+"" opens ctrlp inside current working directory nearest root parent
+"let g:ctrlp_working_path_mode = 'wr'
+"let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
 nnoremap <C-P>p :CtrlP<CR>
 nnoremap <C-P>, :CtrlPBufTag<CR>

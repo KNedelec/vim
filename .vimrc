@@ -21,6 +21,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " Fast saving
 nmap <leader>w :w!<cr>
+nmap <leader>x :x!<cr>
 "
 " set UTF-8 encoding
 set enc=utf-8
@@ -36,7 +37,7 @@ set textwidth=120
 set t_Co=256
 filetype plugin indent on
 syntax on
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
 set background=light
 colorscheme transparent
 set number
@@ -79,6 +80,7 @@ nnoremap k gk
 
 "auto close 
 imap {} {<cr>}<ESC>O
+imap (ff (function (){<cr>});<ESC>O
 
 
 set nocursorline
@@ -144,6 +146,16 @@ noremap <C-Y> 3<C-Y>
 " => grep current word
 """""""""""""""""""""""""""""
 nnoremap gr :Ack '\b<cword>\b' *<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+""" JS
+""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"autocmd FileType php set omnifunc=phpcomplete#Complete
+"set tags+=~/.vim/tags/php
+"set tags+=~/.vim/tags/phpt.tags
+
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -216,4 +228,26 @@ nnoremap <C-P>l :CtrlPLine<CR>
 "set tags+=~/work/opcua/tags
 "set tags+=~/work/Performance_4149/miniweb/tags
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" Indent guides 
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" tern vim
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>td :TernDef<CR>
+nnoremap <leader>tr :TernRefs<CR>
+nnoremap <leader>tn :TernRename<CR>
+nnoremap <leader>tt :TernType<CR>
 

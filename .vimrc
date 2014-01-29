@@ -124,10 +124,10 @@ map <C-l> <C-W>l
 
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+map <leader>tn :tabnew<CR>
+map <leader>to :tabonly<CR>
+map <leader>tm :tabmove<CR>
+map <leader>tc :tabclose<CR>
 
 noremap <leader>e :Vexplore<CR>
 noremap <leader>q :q<CR>
@@ -146,16 +146,6 @@ noremap <C-Y> 3<C-Y>
 " => grep current word
 """""""""""""""""""""""""""""
 nnoremap gr :Ack '\b<cword>\b' *<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-""" JS
-""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"autocmd FileType php set omnifunc=phpcomplete#Complete
-"set tags+=~/.vim/tags/php
-"set tags+=~/.vim/tags/phpt.tags
-
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -188,19 +178,21 @@ nnoremap gr :Ack '\b<cword>\b' *<CR>
 "" CtrlP 
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" size for response
+" size for response
 let g:ctrlp_max_height = 40
-"" reuse cache between sessions
-let g:ctrlp_clear_cache_on_exit = 1
-"" search inside hidden files and folders
+" reuse cache between sessions
+let g:ctrlp_clear_cache_on_exit = 0
+" search inside hidden files and folders
 let g:ctrlp_show_hidden = 1
-"" number of files to scan, 0=no limit
+" number of files to scan, 0=no limit
 let g:ctrlp_max_files = 0
-"" max folder depth
-let g:ctrlp_max_depth = 1000
-"" opens ctrlp inside current working directory nearest root parent
-"let g:ctrlp_working_path_mode = 'wr'
-"let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+" max folder depth
+let g:ctrlp_max_depth = 15
+" opens ctrlp inside current working directory nearest root parent
+let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*
 
 nnoremap <C-P>p :CtrlP<CR>
 nnoremap <C-P>, :CtrlPBufTag<CR>
@@ -227,7 +219,6 @@ nnoremap <C-P>l :CtrlPLine<CR>
 "set tags+=~/work/sidust/tags
 "set tags+=~/work/opcua/tags
 "set tags+=~/work/Performance_4149/miniweb/tags
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

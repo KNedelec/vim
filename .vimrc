@@ -239,6 +239,6 @@ let g:indent_guides_enable_on_vim_startup = 1
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>td :TernDef<CR>
 nnoremap <leader>tr :TernRefs<CR>
-nnoremap <leader>tn :TernRename<CR>
+nnoremap <leader>te :TernRename<CR>
 nnoremap <leader>tt :TernType<CR>
 

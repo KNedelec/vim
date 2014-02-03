@@ -148,6 +148,13 @@ noremap <C-Y> 3<C-Y>
 nnoremap gr :Ack '\b<cword>\b' *<CR>
 
 
+"""""""""""""""""""""""""""""
+" => quickfix
+"""""""""""""""""""""""""""""
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
+
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
 "" PHP 

@@ -82,6 +82,9 @@ nnoremap k gk
 imap {} {<cr>}<ESC>O
 imap (ff (function (){<cr>});<ESC>O
 
+" folding
+set foldmethod=syntax
+set foldlevel=6
 
 set nocursorline
 nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
@@ -141,6 +144,13 @@ noremap <leader>< 20<C-W><
 noremap <C-E> 3<C-E>
 noremap <C-Y> 3<C-Y>
 
+" buffer nav
+" last buffer
+nnoremap <leader>p :b#<CR>
+
+" quickfix
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprev<CR>
 
 """""""""""""""""""""""""""""
 " => grep current word
@@ -199,10 +209,10 @@ let g:ctrlp_max_depth = 15
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*,*/lib/*
 
 nnoremap <C-P>p :CtrlP<CR>
-nnoremap <C-P>, :CtrlPBufTag<CR>
+nnoremap <C-P>, :CtrlPBuffer<CR>
 nnoremap <C-P>; :CtrlPMRUFiles<CR>
 nnoremap <C-P>m :CtrlPMixed<CR>
 nnoremap <C-P>l :CtrlPLine<CR>

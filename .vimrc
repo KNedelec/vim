@@ -153,9 +153,12 @@ nnoremap ]q :cnext<CR>
 nnoremap [q :cprev<CR>
 
 """""""""""""""""""""""""""""
-" => grep current word
+"
+" => SEARCH
+"
 """""""""""""""""""""""""""""
-nnoremap gr :Ack '\b<cword>\b' *<CR>
+nmap <F3> :vimgrep // **/*<left><left><left><left><left><left>
+nmap gr :vimgrep /<C-R><C-W>/ **/*<CR>
 
 
 """""""""""""""""""""""""""""

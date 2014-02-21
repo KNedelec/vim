@@ -77,6 +77,14 @@ set pastetoggle=<F2>
 nnoremap j gj
 nnoremap k gk
 
+" delete to black hole register
+nmap D "_d
+
+" new line without entering insert mode
+nmap <S-Enter> O<Esc>
+nmap <CR>i<CR><Esc>
+" inverse of <s-J>
+nnoremap <C-J> a<CR><Esc>k$
 
 "auto close 
 imap {} {<cr>}<ESC>O
@@ -157,8 +165,8 @@ nnoremap [q :cprev<CR>
 " => SEARCH
 "
 """""""""""""""""""""""""""""
-nmap <F3> :vimgrep // **/*<left><left><left><left><left><left>
-nmap gr :vimgrep /<C-R><C-W>/ **/*<CR>
+nmap <F3> :noautocmd vimgrep // **/*<left><left><left><left><left><left>
+nmap gr :noautocmd vimgrep /<C-R><C-W>/ **/*<CR>
 
 
 """""""""""""""""""""""""""""

@@ -31,6 +31,7 @@ set nocompatible
 set autoindent
 set smartindent
 set tabstop=4        " tab width is 4 spaces
+set backspace=indent,eol,start  " like normal backspace
 set shiftwidth=4     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
@@ -45,14 +46,17 @@ set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
 set wildmode=longest:full
 set wildmenu
-
+set nosol       " prevent vim to change column when jumping
+set shm=at      " short vim messaged
 set hidden
+set list listchars=tab:»·,trail:· " display tabs and trailing whitespaces
 
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set smartcase
 set magic
 set scrolloff=5   " always keep 5 lines visible above/below cursor
+syntax sync minlines=256 "scroll perf
 
 " always center screen on result
 nnoremap n nzz
@@ -102,7 +106,7 @@ imap (ff (function (){<cr>});<ESC>O
 set foldmethod=syntax
 set foldlevel=6
 
-set nocursorline
+set cursorline
 nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
 """"""""""""""""""""""""""""""
@@ -157,8 +161,8 @@ noremap <leader>< 20<C-W><
 
 
 " faster scrolling
-noremap <C-E> 3<C-E>
-noremap <C-Y> 3<C-Y>
+nnoremap <C-E> 5<C-E>
+nnoremap <C-Y> 5<C-Y>
 
 " buffer nav
 " last buffer
@@ -235,7 +239,6 @@ nnoremap <C-P>, :CtrlPBuffer<CR>
 nnoremap <C-P>; :CtrlPMRUFiles<CR>
 nnoremap <C-P>m :CtrlPMixed<CR>
 nnoremap <C-P>l :CtrlPLine<CR>
-            
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""

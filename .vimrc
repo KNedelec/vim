@@ -82,7 +82,7 @@ nmap D "_d
 
 " new line without entering insert mode
 nmap <S-Enter> O<Esc>
-nmap <CR>i<CR><Esc>
+nmap <CR> <CR>i<CR><Esc>
 " inverse of <s-J>
 nnoremap <C-J> a<CR><Esc>k$
 

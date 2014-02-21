@@ -52,7 +52,15 @@ set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set smartcase
 set magic
+set scrolloff=5   " always keep 5 lines visible above/below cursor
 
+" always center screen on result
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo

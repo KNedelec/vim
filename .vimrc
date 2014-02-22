@@ -72,8 +72,7 @@ set wildignore=*.swp,*.bak,*/app/cache/*
 set title                " change the terminal's title
 
 
-" No sounds 
-set visualbell           " don't beep
+" No annoying alerts 
 set noerrorbells         " don't beep
 
 
@@ -98,8 +97,13 @@ nmap <CR> <CR>i<CR><Esc>
 " inverse of <s-J>
 nnoremap <C-J> a<CR><Esc>k$
 
-"auto close 
-imap {} {<cr>}<ESC>O
+" js function  auto close 
+inoremap <expr> {} nr2char(getchar())
+inoremap <expr> {}<cr> "{}"
+inoremap <expr> {}} "{<cr>};<ESC>O"
+inoremap <expr> {}{ "{<cr>},<ESC>O"
+inoremap <expr> {}o "{<cr>})<ESC>O"
+inoremap <expr> {}p "{<cr>});<ESC>O"
 imap (ff (function (){<cr>});<ESC>O
 
 " folding
@@ -187,6 +191,11 @@ nmap gr :noautocmd vimgrep /<C-R><C-W>/ **/*<CR>
 nnoremap ]q :cnext<CR>
 nnoremap [q :cprev<CR>
 
+augroup BgHighlight
+    autocmd!
+    autocmd WinEnter * set colorcolumn=1
+    autocmd WinLeave * set colorcolumn=0
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

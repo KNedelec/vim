@@ -99,7 +99,7 @@ nnoremap <C-J> a<CR><Esc>k$
 
 " js function  auto close 
 inoremap <expr> {} nr2char(getchar())
-inoremap <expr> {}<cr> "{}"
+inoremap <expr> {}<cr> "{<cr>}<ESC>O"
 inoremap <expr> {}} "{<cr>};<ESC>O"
 inoremap <expr> {}{ "{<cr>},<ESC>O"
 inoremap <expr> {}o "{<cr>})<ESC>O"

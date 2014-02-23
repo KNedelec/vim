@@ -1,6 +1,14 @@
 README
 ======
 
+Requirements
+-----------------
+
+ - npm  
+ - python  
+ - vim with pythoninterp compil flag  
+
+
 Installation
 -----------------
 
@@ -12,3 +20,4 @@ ln -s ~/vim/.vimrc .vimrc
 
 cd ~/vim/bundle/tern  
 npm install  
+

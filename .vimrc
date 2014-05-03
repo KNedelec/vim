@@ -68,7 +68,7 @@ nnoremap g# g#zz
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*/app/cache/*
+set wildignore=*.swp,*.bak,*/app/cache/*,*/node_modules/*,*/dist/*
 set title                " change the terminal's title
 
 
@@ -241,7 +241,7 @@ let g:ctrlp_max_depth = 15
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*,*/lib/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*,*/dist/*
 
 nnoremap <C-P>p :CtrlP<CR>
 nnoremap <C-P>, :CtrlPBuffer<CR>

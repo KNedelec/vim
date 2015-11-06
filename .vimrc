@@ -18,6 +18,8 @@ call pathogen#runtime_append_all_bundles()
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 "
+"Open netwrc
+nmap <silent> <leader>ex :Vexplore<CR>
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -39,8 +41,6 @@ set t_Co=256
 filetype plugin indent on
 syntax on
 "let g:solarized_termcolors=256
-set background=light
-colorscheme transparent
 set number
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
@@ -58,6 +58,9 @@ set magic
 set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
 
+" nerdtree style in explorer
+" let g:netrw_liststyle=3
+
 " always center screen on result
 nnoremap n nzz
 nnoremap N Nzz
@@ -68,7 +71,7 @@ nnoremap g# g#zz
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*/app/cache/*,*/node_modules/*,*/dist/*
+set wildignore=*.swp,*.bak,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
 set title                " change the terminal's title
 
 
@@ -110,7 +113,6 @@ imap (ff (function (){<cr>});<ESC>O
 set foldmethod=syntax
 set foldlevel=6
 
-set cursorline
 nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
 
 """"""""""""""""""""""""""""""
@@ -120,7 +122,7 @@ nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
 set laststatus=2
 
 "Format the status line
-set statusline=\ %{&paste}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+"set statusline=\ %r%{getcwd()}%h\ %{&paste}%F%m%r%h\ %w\ \ \ \ Line:\ %l
 
 
 
@@ -191,36 +193,16 @@ nmap gr :noautocmd vimgrep /<C-R><C-W>/ **/*<CR>
 nnoremap ]q :cnext<CR>
 nnoremap [q :cprev<CR>
 
-augroup BgHighlight
-    autocmd!
-    autocmd WinEnter * set colorcolumn=1
-    autocmd WinLeave * set colorcolumn=0
-augroup END
+"""""""""""""""""""""""""""""
+"" Gundo
+"""""""""""""""""""""""""""""
+nnoremap <F11> :GundoToggle<CR>
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" PHP 
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-"autocmd FileType php set omnifunc=phpcomplete#Complete
-"set tags+=~/.vim/tags/php
-"set tags+=~/.vim/tags/phpt.tags
 
-"PHP PDV documentor
-" auto doc classes and properties
-" 
-"inoremap <leader>d <ESC>:call PhpDocSingle()<CR>i 
-"nnoremap <leader>d :call PhpDocSingle()<CR> 
-"vnoremap <leader>d :call PhpDocRange()<CR> 
-
-"let g:pdv_cfg_Author = "Kevin Nedelec <kevin.nedelec@gmail.com"
-"let g:pdv_cfg_php4always = 0
-"let g:pdv_cfg_Uses = 0
-"let g:pdv_cfg_Version = ""
-"let g:pdv_cfg_Copyright = ""
-"let g:pdv_cfg_License = ""
-
+"""""""""""""""""""""""""""""
+"" Airline
+"""""""""""""""""""""""""""""
+let g:airline#extensions#tabline#enabled = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -241,7 +223,7 @@ let g:ctrlp_max_depth = 15
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/debug/*,*/dist/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
 
 nnoremap <C-P>p :CtrlP<CR>
 nnoremap <C-P>, :CtrlPBuffer<CR>

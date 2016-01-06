@@ -35,6 +35,7 @@
 :LAckAdd	ack.txt	/*:LAckAdd*
 :LAckHelp	ack.txt	/*:LAckHelp*
 :MatchDebug	matchit.txt	/*:MatchDebug*
+:Tcd	tcd.txt	/*:Tcd*
 :TlistAddFiles	taglist.txt	/*:TlistAddFiles*
 :TlistAddFilesRecursive	taglist.txt	/*:TlistAddFilesRecursive*
 :TlistClose	taglist.txt	/*:TlistClose*
@@ -294,6 +295,9 @@ taglist-session	taglist.txt	/*taglist-session*
 taglist-todo	taglist.txt	/*taglist-todo*
 taglist-using	taglist.txt	/*taglist-using*
 taglist.txt	taglist.txt	/*taglist.txt*
+tcd-issues	tcd.txt	/*tcd-issues*
+tcd-license	tcd.txt	/*tcd-license*
+tcd.txt	tcd.txt	/*tcd.txt*
 v_[%	matchit.txt	/*v_[%*
 v_]%	matchit.txt	/*v_]%*
 v_a%	matchit.txt	/*v_a%*

@@ -94,12 +94,6 @@ nnoremap k gk
 " delete to black hole register
 nmap D "_d
 
-" new line without entering insert mode
-nmap <S-Enter> O<Esc>
-nmap <CR> <CR>i<CR><Esc>
-" inverse of <s-J>
-nnoremap <C-J> a<CR><Esc>k$
-
 " js function  auto close 
 inoremap <expr> {} nr2char(getchar())
 inoremap <expr> {}<cr> "{<cr>}<ESC>O"
@@ -203,6 +197,21 @@ nnoremap <F11> :GundoToggle<CR>
 "" Airline
 """""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
+
+"""""""""""""""""""""""""""""
+"" Airline
+"""""""""""""""""""""""""""""
+
+autocmd FileType javascript noremap <buffer>  <leader>f :call JsBeautify()<cr>
+autocmd FileType json noremap <buffer>  <leader>f :call JsBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <leader>f :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <leader>f :call CSSBeautify()<cr>
+
+autocmd FileType javascript vnoremap <buffer>  <leader>f :call RangeJsBeautify()<cr>
+autocmd FileType html vnoremap <buffer> <leader>f :call RangeHtmlBeautify()<cr>
+autocmd FileType css vnoremap <buffer> <leader>f :call RangeCSSBeautify()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

@@ -61,3 +61,6 @@
 [submodule "bundle/vim-syntastc"]
 	path = bundle/vim-syntastc
 	url = git@github.com:scrooloose/syntastic.git
+[submodule "bundle/vim-recover"]
+	path = bundle/vim-recover
+	url = git@github.com:chrisbra/Recover.vim.git

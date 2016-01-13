@@ -32,9 +32,9 @@ set termencoding=utf-8
 set nocompatible
 set autoindent
 set smartindent
-set tabstop=4        " tab width is 4 spaces
+set tabstop=2        " tab width is 4 spaces
 set backspace=indent,eol,start  " like normal backspace
-set shiftwidth=4     " indent also with 4 spaces
+set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
 set t_Co=256
@@ -197,6 +197,7 @@ nnoremap <F11> :GundoToggle<CR>
 "" Airline
 """""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
 
 """""""""""""""""""""""""""""
 "" Airline
@@ -277,7 +278,18 @@ let g:indent_guides_enable_on_vim_startup = 1
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <leader>td :TernDef<CR>
+nnoremap <leader>th :TernDoc<CR>
 nnoremap <leader>tr :TernRefs<CR>
 nnoremap <leader>te :TernRename<CR>
 nnoremap <leader>tt :TernType<CR>
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" syntastic
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0

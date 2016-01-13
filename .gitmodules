@@ -52,3 +52,12 @@
 [submodule "bundle/vim-unimpaired"]
 	path = bundle/vim-unimpaired
 	url = git://github.com/tpope/vim-unimpaired.git
+[submodule "bundle/vim-jsdoc"]
+	path = bundle/vim-jsdoc
+	url = git@github.com:heavenshell/vim-jsdoc.git
+[submodule "bundle/vim-tern"]
+	path = bundle/vim-tern
+	url = git@github.com:ternjs/tern_for_vim.git
+[submodule "bundle/vim-syntastc"]
+	path = bundle/vim-syntastc
+	url = git@github.com:scrooloose/syntastic.git

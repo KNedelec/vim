@@ -25,20 +25,20 @@
 [submodule "bundle/dracula-theme"]
 	path = bundle/dracula-theme
 	url = git@github.com:zenorocha/dracula-theme.git
-[submodule "/Users/kevinnedelec/.vim/bundle/vim-airline"]
-	path = /Users/kevinnedelec/.vim/bundle/vim-airline
+[submodule "bundle/vim-airline"]
+	path = bundle/vim-airline
 	url = https://github.com/bling/vim-airline
-[submodule "/Users/kevinnedelec/.vim/bundle/vim-fugitive"]
-	path = /Users/kevinnedelec/.vim/bundle/vim-fugitive
+[submodule "bundle/vim-fugitive"]
+	path = bundle/vim-fugitive
 	url = git://github.com/tpope/vim-fugitive.git
-[submodule "/Users/kevinnedelec/.vim/bundle/vim-bufferline"]
-	path = /Users/kevinnedelec/.vim/bundle/vim-bufferline
+[submodule "bundle/vim-bufferline"]
+	path = bundle/vim-bufferline
 	url = https://github.com/bling/vim-bufferline
-[submodule "/Users/kevinnedelec/.vim/bundle/gundo"]
-	path = /Users/kevinnedelec/.vim/bundle/gundo
+[submodule "bundle/gundo"]
+	path = bundle/gundo
 	url = http://github.com/sjl/gundo.vim.git
-[submodule "/Users/kevinnedelec/.vim/bundle/vim-signify"]
-	path = /Users/kevinnedelec/.vim/bundle/vim-signify
+[submodule "bundle/vim-signify"]
+	path = bundle/vim-signify
 	url = https://github.com/mhinz/vim-signify
 [submodule "bundle/vim-gitgutter"]
 	path = bundle/vim-gitgutter

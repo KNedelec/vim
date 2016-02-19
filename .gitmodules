@@ -64,3 +64,6 @@
 [submodule "bundle/vim-recover"]
 	path = bundle/vim-recover
 	url = git@github.com:chrisbra/Recover.vim.git
+[submodule "bundle/scss-syntax"]
+	path = bundle/scss-syntax
+	url = git@github.com:cakebaker/scss-syntax.vim.git

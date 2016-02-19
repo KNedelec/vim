@@ -37,7 +37,14 @@ set backspace=indent,eol,start  " like normal backspace
 set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
+set fo?
+set fo+=t
+set fo-=l
 set t_Co=256
+augroup vimrc_autocmds
+    autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+      autocmd BufEnter * match OverLength /\%119v.*/
+    augroup END
 filetype plugin indent on
 syntax on
 "let g:solarized_termcolors=256
@@ -198,6 +205,8 @@ nnoremap <F11> :GundoToggle<CR>
 """""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
+" show format options in airline
+let g:airline_section_y="[%{&fo}]"
 
 """""""""""""""""""""""""""""
 "" Airline
@@ -209,10 +218,12 @@ autocmd FileType json noremap <buffer>  <leader>f :call JsBeautify()<cr>
 autocmd FileType html noremap <buffer> <leader>f :call HtmlBeautify()<cr>
 " for css or scss
 autocmd FileType css noremap <buffer> <leader>f :call CSSBeautify()<cr>
+autocmd FileType scss noremap <buffer> <leader>f :call CSSBeautify()<cr>
 
 autocmd FileType javascript vnoremap <buffer>  <leader>f :call RangeJsBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <leader>f :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer> <leader>f :call RangeCSSBeautify()<cr>
+autocmd FileType scss vnoremap <buffer> <leader>f :call RangeCSSBeautify()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -289,7 +300,7 @@ nnoremap <leader>tt :TernType<CR>
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_html_checkers = ['validator']
+let g:syntastic_html_checkers = []
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0

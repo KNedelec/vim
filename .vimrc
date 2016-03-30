@@ -65,9 +65,6 @@ set magic
 set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
 
-" nerdtree style in explorer
-" let g:netrw_liststyle=3
-
 " always center screen on result
 nnoremap n nzz
 nnoremap N Nzz
@@ -81,10 +78,8 @@ set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
 set title                " change the terminal's title
 
-
 " No annoying alerts 
 set noerrorbells         " don't beep
-
 
 " No backup , swap files in /var/tmp
 set nobackup
@@ -205,12 +200,6 @@ nnoremap <F11> :GundoToggle<CR>
 """""""""""""""""""""""""""""
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
-" show format options in airline
-let g:airline_section_y="[%{&fo}]"
-
-"""""""""""""""""""""""""""""
-"" Airline
-"""""""""""""""""""""""""""""
 
 autocmd FileType javascript noremap <buffer>  <leader>f :call JsBeautify()<cr>
 autocmd FileType json noremap <buffer>  <leader>f :call JsBeautify()<cr>
@@ -293,6 +282,7 @@ nnoremap <leader>th :TernDoc<CR>
 nnoremap <leader>tr :TernRefs<CR>
 nnoremap <leader>te :TernRename<CR>
 nnoremap <leader>tt :TernType<CR>
+let g:tern_show_argument_hints='on_hold'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

@@ -37,7 +37,6 @@ set backspace=indent,eol,start  " like normal backspace
 set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
-set fo?
 set fo+=t
 set fo-=l
 set t_Co=256
@@ -295,3 +294,4 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+let g:syntastic_typescript_tsc_fname = ''

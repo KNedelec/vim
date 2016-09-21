@@ -41,9 +41,9 @@ set fo+=t
 set fo-=l
 set t_Co=256
 augroup vimrc_autocmds
-    autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-      autocmd BufEnter * match OverLength /\%119v.*/
-    augroup END
+  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
+  autocmd BufEnter * match OverLength /\%119v.*/
+augroup END
 filetype plugin indent on
 syntax on
 "let g:solarized_termcolors=256
@@ -64,20 +64,16 @@ set magic
 set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
 
-" always center screen on result
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
+" always cen ter screen on result
+nnoremap <silent> n n:call HLNext(0.4)<cr>
+nnoremap <silent> N N:call HLNext(0.4)<cr>
 
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
+set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
 set title                " change the terminal's title
 
-" No annoying alerts 
+" No annoying alerts
 set noerrorbells         " don't beep
 
 " No backup , swap files in /var/tmp
@@ -95,7 +91,7 @@ nnoremap k gk
 " delete to black hole register
 nmap D "_d
 
-" js function  auto close 
+" js function  auto close
 inoremap <expr> {} nr2char(getchar())
 inoremap <expr> {}<cr> "{<cr>}<ESC>O"
 inoremap <expr> {}} "{<cr>};<ESC>O"
@@ -124,7 +120,7 @@ set laststatus=2
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Move a line of text using leader+[jk] 
+" Move a line of text using leader+[jk]
 nmap <leader>j mz:m+<cr>`z
 nmap <leader>k mz:m-2<cr>`z
 vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
@@ -200,22 +196,34 @@ nnoremap <F11> :GundoToggle<CR>
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 
-autocmd FileType javascript noremap <buffer>  <leader>f :call JsBeautify()<cr>
-autocmd FileType json noremap <buffer>  <leader>f :call JsBeautify()<cr>
-" for html
-autocmd FileType html noremap <buffer> <leader>f :call HtmlBeautify()<cr>
-" for css or scss
-autocmd FileType css noremap <buffer> <leader>f :call CSSBeautify()<cr>
-autocmd FileType scss noremap <buffer> <leader>f :call CSSBeautify()<cr>
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#tab_nr_type = 2
 
-autocmd FileType javascript vnoremap <buffer>  <leader>f :call RangeJsBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <leader>f :call RangeHtmlBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <leader>f :call RangeCSSBeautify()<cr>
-autocmd FileType scss vnoremap <buffer> <leader>f :call RangeCSSBeautify()<cr>
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#tabline#fnamemod = ':.'
+
+let g:airline#extensions#tabline#left_sep = '  '
+let g:airline#extensions#tabline#left_alt_sep = '  '
+let g:airline#extensions#tabline#right_sep = ' '
+let g:airline#extensions#tabline#right_alt_sep = ' '
+
+let g:airline_mode_map = {
+  \ 'n': 'N',
+  \ 'i': 'I',
+  \ 'v': 'v',
+  \ 'V': 'V',
+  \ 'r': 'R'
+\ }
+
+let g:airline_section_x = "%{expand('%:p:.')}"
+let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
+let g:airline_section_c = "%{expand('%:t')}"
+
+noremap <leader>f :Autoformat<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
-"" CtrlP 
+"" CtrlP
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " size for response
@@ -234,16 +242,15 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
 
-nnoremap <C-P>p :CtrlP<CR>
+nnoremap <C-P> :CtrlP<CR>
 nnoremap <C-P>, :CtrlPBuffer<CR>
 nnoremap <C-P>; :CtrlPMRUFiles<CR>
-nnoremap <C-P>m :CtrlPMixed<CR>
-nnoremap <C-P>l :CtrlPLine<CR>
+nnoremap <C-P>. :CtrlPLine<CR>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
-"" C++ 
+"" C++
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
@@ -261,7 +268,7 @@ nnoremap <C-P>l :CtrlPLine<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
-"" Indent guides 
+"" Indent guides
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -294,4 +301,32 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+
+
+""
+"" typescript
+""
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_tsc_fname = ''
+autocmd FileType typescript setlocal completeopt+=preview
+nmap <Leader>t :echo tsuquyomi#hint()<CR>
+
+
+function! HLNext (blinktime)
+  set invcursorline
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  set invcursorline
+  redraw
+endfunction
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" Fugitive
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>gs :Gstatus<CR>10<C-W>+
+nnoremap <leader>gd :Gvdiff<CR>
+

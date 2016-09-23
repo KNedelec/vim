@@ -15,7 +15,7 @@ execute pathogen#infect()
 call pathogen#runtime_append_all_bundles()
 "
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>ev :vs $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 "
 "Open netwrc
@@ -105,6 +105,8 @@ set foldmethod=syntax
 set foldlevel=6
 
 nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
+
+set path=.,../,,
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -254,10 +256,6 @@ nnoremap <C-P>. :CtrlPLine<CR>
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-"
-" Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
-" This offers intelligent C++ completion when typing '.' '->' or <C-o>
-" Load standard tag files
 "set tags+=~/.vim/tags/cpp
 "set tags+=~/.vim/tags/gl
 "set tags+=~/.vim/tags/sdl
@@ -309,6 +307,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_tsc_fname = ''
+let g:tsuquyomi_completion_detail = 1
 autocmd FileType typescript setlocal completeopt+=preview
 nmap <Leader>t :echo tsuquyomi#hint()<CR>
 

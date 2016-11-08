@@ -82,3 +82,18 @@
 [submodule "bundle/editorconfig-vim"]
 	path = bundle/editorconfig-vim
 	url = git@github.com:editorconfig/editorconfig-vim.git
+[submodule "bundle/YouCompleteMe"]
+	path = bundle/YouCompleteMe
+	url = git@github.com:Valloric/YouCompleteMe
+[submodule "bundle/vim-commentary"]
+	path = bundle/vim-commentary
+	url = git://github.com/tpope/vim-commentary.git
+[submodule "bundle/Conque-Shell"]
+	path = bundle/Conque-Shell
+	url = git@github.com:vim-scripts/Conque-Shell.git
+[submodule "plugin/vimshell.vim"]
+	path = plugin/vimshell.vim
+	url = git@github.com:Shougo/vimshell.vim.git
+[submodule "plugin/vimproc.vim"]
+	path = plugin/vimproc.vim
+	url = git@github.com:Shougo/vimproc.vim.git

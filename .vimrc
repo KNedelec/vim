@@ -1,31 +1,55 @@
 " VIM Configuration File
-"
-"
 
 """""""""""""""""""""""""""""""""""""""
 "
-"  1. Basic settings
+"  Plugin managers
 "
 """""""""""""""""""""""""""""""""""""""
-"
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" todo: REMOVE
 " Use pathogen to easily modify the runtime path to include all
 " plugins under the ~/.vim/bundle directory
 call pathogen#helptags()
 execute pathogen#infect()
 call pathogen#runtime_append_all_bundles()
+
+
+"""""""""""""""""""""""""""""""""""""""
 "
-" Quickly edit/reload the vimrc file
+"  Basic settings
+"
+"""""""""""""""""""""""""""""""""""""""
+
+"
+" Theme
+"
+set background=light
+colorscheme lucius "wombat256, solarized
+let g:solarized_termcolors=256
+" day mode
+nnoremap <leader>n :set background=dark<CR>
+" night mode
+nnoremap <leader>N :set background=light<CR>
+
+"
+" Vimrc - Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :vs $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
-"
-"Open netwrc
-nmap <silent> <leader>ex :Vexplore<CR>
 
+"
 " Fast saving
 nmap <leader>w :w!<cr>
 nmap <leader>x :x!<cr>
+
 "
-" set UTF-8 encoding
+" Basic stuff
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
@@ -37,16 +61,12 @@ set backspace=indent,eol,start  " like normal backspace
 set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
+set colorcolumn=120
 set fo+=t
 set fo-=l
 set t_Co=256
-augroup vimrc_autocmds
-  autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929
-  autocmd BufEnter * match OverLength /\%119v.*/
-augroup END
 filetype plugin indent on
 syntax on
-"let g:solarized_termcolors=256
 set number
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
@@ -56,30 +76,23 @@ set nosol       " prevent vim to change column when jumping
 set shm=at      " short vim messaged
 set hidden
 set list listchars=tab:»·,trail:· " display tabs and trailing whitespaces
-
-set hlsearch      " highlight search terms
-set incsearch     " show search matches as you type
-set smartcase
-set magic
 set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
-
-" always cen ter screen on result
-nnoremap <silent> n n:call HLNext(0.4)<cr>
-nnoremap <silent> N N:call HLNext(0.4)<cr>
-
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
 set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
 set title                " change the terminal's title
-
-" No annoying alerts
 set noerrorbells         " don't beep
-
-" No backup , swap files in /var/tmp
 set nobackup
 set nowb
 set directory=/var/tmp/
+
+"
+" Search
+set hlsearch      " highlight search terms
+set incsearch     " show search matches as you type
+set smartcase
+set magic
 
 "switch paste mode
 set pastetoggle=<F2>
@@ -98,25 +111,18 @@ inoremap <expr> {}} "{<cr>};<ESC>O"
 inoremap <expr> {}{ "{<cr>},<ESC>O"
 inoremap <expr> {}o "{<cr>})<ESC>O"
 inoremap <expr> {}p "{<cr>});<ESC>O"
-imap (ff (function (){<cr>});<ESC>O
+inoremap (ff (function (){<cr>});<ESC>O
 
+"
 " folding
 set foldmethod=syntax
 set foldlevel=6
 
-nnoremap <silent> <Leader>l ml:execute 'match Search /\%'.line('.').'l/'<CR>
-
+" path is path with siblings and current
 set path=.,../,,
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
 " Always show the status line
 set laststatus=2
-
-"Format the status line
-"set statusline=\ %r%{getcwd()}%h\ %{&paste}%F%m%r%h\ %w\ \ \ \ Line:\ %l
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -151,7 +157,7 @@ map <leader>to :tabonly<CR>
 map <leader>tm :tabmove<CR>
 map <leader>tc :tabclose<CR>
 
-noremap <leader>e :Vexplore<CR>
+noremap <leader>ex :Vexplore<CR>
 noremap <leader>q :q<CR>
 noremap <leader>= 10<C-W>+
 noremap <leader>- 10<C-W>-
@@ -210,18 +216,24 @@ let g:airline#extensions#tabline#right_sep = ' '
 let g:airline#extensions#tabline#right_alt_sep = ' '
 
 let g:airline_mode_map = {
-  \ 'n': 'N',
-  \ 'i': 'I',
-  \ 'v': 'v',
-  \ 'V': 'V',
-  \ 'r': 'R'
-\ }
+      \ 'n': 'N',
+      \ 'i': 'I',
+      \ 'v': 'v',
+      \ 'V': 'V',
+      \ 'r': 'R'
+      \ }
 
 let g:airline_section_x = "%{expand('%:p:.')}"
 let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
 let g:airline_section_c = "%{expand('%:t')}"
 
-noremap <leader>f :Autoformat<cr>
+function! KFormat()
+  let ln = line('.')
+  execute ':Autoformat'
+  execute 'normal! Go'
+  execute 'normal! '.ln.'G'
+endfunction
+noremap <leader>f :call KFormat()<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -301,25 +313,23 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
-"" typescript
+"" javascript/typescript
 ""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_tsc_fname = ''
 let g:tsuquyomi_completion_detail = 1
 autocmd FileType typescript setlocal completeopt+=preview
 nmap <Leader>t :echo tsuquyomi#hint()<CR>
+nnoremap <leader>i :TsuImport<CR>
 
-
-function! HLNext (blinktime)
-  set invcursorline
-  redraw
-  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
-  set invcursorline
-  redraw
-endfunction
-
+autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
+let g:jsdoc_allow_input_prompt = 0
+let g:jsdoc_input_description = 1
+let g:jsdoc_custom_args_regex_only = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -329,3 +339,22 @@ endfunction
 nnoremap <leader>gs :Gstatus<CR>10<C-W>+
 nnoremap <leader>gd :Gvdiff<CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" YCM
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""
+"" Snippets
+""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<c-\>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+autocmd FileType typescript setlocal commentstring=//\ %s

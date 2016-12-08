@@ -67,9 +67,6 @@
 [submodule "bundle/vim-javascript"]
 	path = bundle/vim-javascript
 	url = git@github.com:pangloss/vim-javascript.git
-[submodule "bundle/vimproc.vim"]
-	path = bundle/vimproc.vim
-	url = git@github.com:Shougo/vimproc.vim.git
 [submodule "bundle/typescript-vim"]
 	path = bundle/typescript-vim
 	url = git@github.com:leafgarland/typescript-vim.git
@@ -91,9 +88,3 @@
 [submodule "bundle/Conque-Shell"]
 	path = bundle/Conque-Shell
 	url = git@github.com:vim-scripts/Conque-Shell.git
-[submodule "plugin/vimshell.vim"]
-	path = plugin/vimshell.vim
-	url = git@github.com:Shougo/vimshell.vim.git
-[submodule "plugin/vimproc.vim"]
-	path = plugin/vimproc.vim
-	url = git@github.com:Shougo/vimproc.vim.git

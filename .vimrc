@@ -80,7 +80,7 @@ set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
-set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,build,*/vendor
+set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,*/vendor
 set title                " change the terminal's title
 set noerrorbells         " don't beep
 set nobackup
@@ -351,10 +351,37 @@ nnoremap <leader>gd :Gvdiff<CR>
 "" Snippets
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Track the engine.
 Plugin 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger="<c-\>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-n>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
+function! g:UltiSnips_Complete()
+  call UltiSnips_ExpandSnippet()
+  if g:ulti_expand_res == 0
+    if pumvisible()
+      return "\<C-n>"
+    else
+      call UltiSnips_JumpForwards()
+      if g:ulti_jump_forwards_res == 0
+        return "\<TAB>"
+      endif
+    endif
+  endif
+  return ""
+endfunction
+" au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 
 autocmd FileType typescript setlocal commentstring=//\ %s
+
+

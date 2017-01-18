@@ -47,6 +47,7 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " Fast saving
 nmap <leader>w :w!<cr>
 nmap <leader>x :x!<cr>
+nnoremap <leader>r :w!<cr> :execute '!sshpass -p "vagrant" scp -r ' . expand('%:h') . '/. vagrant@10.0.0.2:/var/www/' .  expand('%:h') . '/'<cr> :redraw!<cr>
 
 "
 " Basic stuff
@@ -106,6 +107,7 @@ nmap D "_d
 
 " js function  auto close
 inoremap <expr> {} nr2char(getchar())
+inoremap <expr> {}<space> "{}"
 inoremap <expr> {}<cr> "{<cr>}<ESC>O"
 inoremap <expr> {}} "{<cr>};<ESC>O"
 inoremap <expr> {}{ "{<cr>},<ESC>O"
@@ -241,7 +243,7 @@ noremap <leader>f :call KFormat()<cr>
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " size for response
-let g:ctrlp_max_height = 40
+let g:ctrlp_max_height = 15
 " reuse cache between sessions
 let g:ctrlp_clear_cache_on_exit = 0
 " search inside hidden files and folders
@@ -253,6 +255,11 @@ let g:ctrlp_max_depth = 15
 " opens ctrlp inside current working directory nearest root parent
 let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+
+" use the silver searcher
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
 
@@ -320,10 +327,13 @@ let g:syntastic_check_on_wq = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_javascript_support = 1
+let g:tsuquyomi_single_quote_import = 1
 let g:syntastic_typescript_tsc_fname = ''
 let g:tsuquyomi_completion_detail = 1
+let g:tsuquyomi_completion_preview = 1
 autocmd FileType typescript setlocal completeopt+=preview
-nmap <Leader>t :echo tsuquyomi#hint()<CR>
+nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
 nnoremap <leader>i :TsuImport<CR>
 
 autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
@@ -383,5 +393,7 @@ endfunction
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 
 autocmd FileType typescript setlocal commentstring=//\ %s
+
+
 
 

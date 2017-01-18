@@ -88,3 +88,6 @@
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = git@github.com:ctrlpvim/ctrlp.vim.git
+[submodule "bundle/ctrlp-py-matcher"]
+	path = bundle/ctrlp-py-matcher
+	url = https://github.com/FelikZ/ctrlp-py-matcher

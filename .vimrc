@@ -260,6 +260,7 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
 

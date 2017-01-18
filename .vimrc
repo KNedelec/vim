@@ -264,11 +264,6 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
 
-nnoremap <C-P> :CtrlP<CR>
-nnoremap <C-P>, :CtrlPBuffer<CR>
-nnoremap <C-P>; :CtrlPMRUFiles<CR>
-nnoremap <C-P>. :CtrlPLine<CR>
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""

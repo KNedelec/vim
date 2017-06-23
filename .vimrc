@@ -1,5 +1,7 @@
 " VIM Configuration File
 
+set nocompatible
+
 """""""""""""""""""""""""""""""""""""""
 "
 "  Plugin managers
@@ -7,11 +9,42 @@
 """""""""""""""""""""""""""""""""""""""
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'VundleVim/Vundle.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'sjl/gundo.vim'
+Plug 'mhinz/vim-signify'
+Plug 'scrooloose/syntastic'
+Plug 'kien/ctrlp.vim'
+Plug 'mileszs/ack.vim'
+Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-commentary'
+Plug 'airblade/vim-gitgutter'
+Plug 'elzr/vim-json'
+Plug 'chrisbra/Recover.vim'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'Chiel92/vim-autoformat'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'evidens/vim-twig'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+call plug#end()
+
+imap jj <ESC>
 
 " todo: REMOVE
 " Use pathogen to easily modify the runtime path to include all
@@ -54,7 +87,6 @@ nnoremap <leader>r :w!<cr> :execute '!sshpass -p "vagrant" scp -r ' . expand('%:
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-set nocompatible
 set autoindent
 set smartindent
 set tabstop=2        " tab width is 4 spaces
@@ -358,10 +390,8 @@ nnoremap <leader>gd :Gvdiff<CR>
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Track the engine.
-Plugin 'SirVer/ultisnips'
 
 " Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
@@ -389,7 +419,4 @@ endfunction
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 
 autocmd FileType typescript setlocal commentstring=//\ %s
-
-
-
 

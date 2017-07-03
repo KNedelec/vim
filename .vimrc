@@ -41,6 +41,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
 

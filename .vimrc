@@ -1,4 +1,5 @@
 " VIM Configuration File
+" :let $VIMRUNTIME = "/usr/local/share/vim/vim80"
 
 set nocompatible
 
@@ -68,9 +69,9 @@ set background=light
 colorscheme lucius "wombat256, solarized
 let g:solarized_termcolors=256
 " day mode
-nnoremap <leader>n :set background=dark<CR>
+nnoremap <leader>N :set background=dark<CR>
 " night mode
-nnoremap <leader>N :set background=light<CR>
+nnoremap <leader>n :set background=light<CR>
 
 "
 " Vimrc - Quickly edit/reload the vimrc file
@@ -92,6 +93,7 @@ set autoindent
 set smartindent
 set tabstop=2        " tab width is 4 spaces
 set backspace=indent,eol,start  " like normal backspace
+set fixeol
 set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
 set textwidth=120
@@ -120,6 +122,7 @@ set noerrorbells         " don't beep
 set nobackup
 set nowb
 set directory=/var/tmp/
+set noesckeys
 
 "
 " Search
@@ -217,19 +220,43 @@ nnoremap [q :cprev<CR>
 " => SEARCH
 "
 """""""""""""""""""""""""""""
-nmap <F3> :noautocmd vimgrep // **/*<left><left><left><left><left><left>
-nmap gr :noautocmd vimgrep /<C-R><C-W>/ **/*<CR>
+nnoremap gr :exe "Ack '<C-R><C-W>'"<CR>
 
 
 """""""""""""""""""""""""""""
 " => quickfix
 """""""""""""""""""""""""""""
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprev<CR>
+" wrap :cnext/:cprevious and :lnext/:lprevious
+function! WrapCommand(direction, prefix)
+  if a:direction == "up"
+    try
+      execute a:prefix . "previous"
+    catch /^Vim\%((\a\+)\)\=:E553/
+      execute a:prefix . "last"
+    catch /^Vim\%((\a\+)\)\=:E\%(776\|42\):/
+    endtry
+  elseif a:direction == "down"
+    try
+      execute a:prefix . "next"
+    catch /^Vim\%((\a\+)\)\=:E553/
+      execute a:prefix . "first"
+    catch /^Vim\%((\a\+)\)\=:E\%(776\|42\):/
+    endtry
+  endif
+endfunction
+
+" <Home> and <End> go up and down the quickfix list and wrap around
+nnoremap <silent> [q :call WrapCommand('up', 'c')<CR>
+nnoremap <silent> ]q  :call WrapCommand('down', 'c')<CR>
+
+" <C-Home> and <C-End> go up and down the location list and wrap around
+nnoremap <silent> [l :call WrapCommand('up', 'l')<CR>
+nnoremap <silent> ]l  :call WrapCommand('down', 'l')<CR>
 
 """""""""""""""""""""""""""""
 "" Gundo
 """""""""""""""""""""""""""""
+let g:gundo_prefer_python3 = 1
 nnoremap <F11> :GundoToggle<CR>
 
 
@@ -268,7 +295,7 @@ function! KFormat()
   execute 'normal! Go'
   execute 'normal! '.ln.'G'
 endfunction
-noremap <leader>f :call KFormat()<cr>
+noremap <leader>f :Autoformat<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -292,6 +319,7 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 " use the silver searcher
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ackprg = 'ag --vimgrep'
 endif
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
@@ -363,7 +391,9 @@ let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_completion_preview = 1
 autocmd FileType typescript setlocal completeopt+=preview
 nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
+inoremap TT <ESC>:echo tsuquyomi#hint()<CR>
 nnoremap <leader>i :TsuImport<CR>
+inoremap II <ESC>:TsuImport<CR>a
 
 autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
 let g:jsdoc_allow_input_prompt = 0
@@ -398,26 +428,23 @@ nnoremap <leader>gd :Gvdiff<CR>
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
 
-function! g:UltiSnips_Complete()
-  call UltiSnips_ExpandSnippet()
-  if g:ulti_expand_res == 0
-    if pumvisible()
-      return "\<C-n>"
-    else
-      call UltiSnips_JumpForwards()
-      if g:ulti_jump_forwards_res == 0
-        return "\<TAB>"
-      endif
-    endif
-  endif
-  return ""
-endfunction
+" function! g:UltiSnips_Complete()
+"   call UltiSnips#ExpandSnippet()
+"   if g:ulti_expand_res == 0
+"     if pumvisible()
+"       return "\<C-n>"
+"     else
+"       call UltiSnips#JumpForwards()
+"       if g:ulti_jump_forwards_res == 0
+"         return "\<TAB>"
+"       endif
+"     endif
+"   endif
+"   return ""
+" endfunction
 " au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
 
 autocmd FileType typescript setlocal commentstring=//\ %s
-

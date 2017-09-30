@@ -12,49 +12,70 @@ set nocompatible
 " set the runtime path to include Vundle and initialize
 call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle, required
-Plug 'VundleVim/Vundle.vim'
-Plug 'Valloric/YouCompleteMe'
-Plug 'bling/vim-airline'
-Plug 'bling/vim-bufferline'
+" ColorScheme
+Plug 'jonathanfilip/vim-lucius'
+Plug 'altercation/vim-colors-solarized'
+
+" js
+Plug 'moll/vim-node'
+Plug 'ternjs/tern_for_vim'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/yajs.vim'
+Plug 'othree/es.next.syntax.vim'
+Plug 'mklabs/mdn.vim'
+
+" Typescript
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
+
+" Python
+Plug 'davidhalter/jedi'
+Plug 'davidhalter/jedi-vim'
+Plug 'zchee/deoplete-jedi'
+
+" git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-vinegar'
+
+" html
+Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
+" json
+Plug 'elzr/vim-json'
+" pug
+Plug 'digitaltoad/vim-pug'
+Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
+" twig
+Plug 'lumiliet/vim-twig'
+" css
+Plug 'ap/vim-css-color'
+
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'sjl/gundo.vim'
 Plug 'mhinz/vim-signify'
 Plug 'scrooloose/syntastic'
 Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
-Plug 'mattn/emmet-vim'
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
-Plug 'airblade/vim-gitgutter'
-Plug 'elzr/vim-json'
+Plug 'tpope/vim-dispatch'
 Plug 'chrisbra/Recover.vim'
 Plug 'cakebaker/scss-syntax.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'Chiel92/vim-autoformat'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'evidens/vim-twig'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'altercation/vim-colors-solarized'
 
 call plug#end()
-
-imap jj <ESC>
-
-" todo: REMOVE
-" Use pathogen to easily modify the runtime path to include all
-" plugins under the ~/.vim/bundle directory
-call pathogen#helptags()
-execute pathogen#infect()
-call pathogen#runtime_append_all_bundles()
-
 
 """""""""""""""""""""""""""""""""""""""
 "
@@ -65,9 +86,8 @@ call pathogen#runtime_append_all_bundles()
 "
 " Theme
 "
-set background=light
+set background=dark
 colorscheme lucius "wombat256, solarized
-let g:solarized_termcolors=256
 " day mode
 nnoremap <leader>N :set background=dark<CR>
 " night mode
@@ -77,6 +97,8 @@ nnoremap <leader>n :set background=light<CR>
 " Vimrc - Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :vs $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
 
 "
 " Fast saving
@@ -104,6 +126,7 @@ set t_Co=256
 filetype plugin indent on
 syntax on
 set number
+set relativenumber
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
 set wildmode=longest:full
@@ -116,6 +139,8 @@ set scrolloff=5   " always keep 5 lines visible above/below cursor
 syntax sync minlines=256 "scroll perf
 set history=1000         " remember more commands and search history
 set undolevels=1000      " use many muchos levels of undo
+set undofile
+set undodir="$HOME/.vim_undo"
 set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,*/vendor
 set title                " change the terminal's title
 set noerrorbells         " don't beep
@@ -123,11 +148,16 @@ set nobackup
 set nowb
 set directory=/var/tmp/
 set noesckeys
+set omnifunc=syntaxcomplete#Complete
+
+" no ex mode
+nnoremap Q <nop>
 
 "
 " Search
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
+set ignorecase
 set smartcase
 set magic
 
@@ -157,11 +187,13 @@ set foldmethod=syntax
 set foldlevel=6
 
 " path is path with siblings and current
-set path=.,../,,
+set path=.,../,,**
 
 " Always show the status line
 set laststatus=2
 
+map <F9> :wa <bar> lclose <bar> Make! <cr>
+nnoremap ,r :Copen<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -244,6 +276,7 @@ function! WrapCommand(direction, prefix)
     endtry
   endif
 endfunction
+autocmd FileType qf wincmd J
 
 " <Home> and <End> go up and down the quickfix list and wrap around
 nnoremap <silent> [q :call WrapCommand('up', 'c')<CR>
@@ -263,6 +296,8 @@ nnoremap <F11> :GundoToggle<CR>
 """""""""""""""""""""""""""""
 "" Airline
 """""""""""""""""""""""""""""
+let g:airline_powerline_fonts = 1
+let g:airline_theme='lucius'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 
@@ -323,8 +358,19 @@ if executable('ag')
 endif
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*,*/debug/*,*/dist/*
-
+set wildmode=list:full
+set wildignore+=*node_modules/**
+set wildignore+=*dist/**
+set wildignore=*.o,*.obj,*~
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*cache*
+set wildignore+=*logs*
+set wildignore+=*DS_Store*
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -372,7 +418,8 @@ let g:tern_show_argument_hints='on_hold'
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_checkers = []
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_loc_list_height = 5
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
@@ -382,6 +429,8 @@ let g:syntastic_check_on_wq = 0
 "" javascript/typescript
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:typescript_compiler_binary = 'tsc'
+let g:typescript_compiler_options = ''
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:tsuquyomi_javascript_support = 1
@@ -389,11 +438,22 @@ let g:tsuquyomi_single_quote_import = 1
 let g:syntastic_typescript_tsc_fname = ''
 let g:tsuquyomi_completion_detail = 1
 let g:tsuquyomi_completion_preview = 1
-autocmd FileType typescript setlocal completeopt+=preview
+let g:tsuquyomi_use_vimproc = 1
 nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
 inoremap TT <ESC>:echo tsuquyomi#hint()<CR>
 nnoremap <leader>i :TsuImport<CR>
 inoremap II <ESC>:TsuImport<CR>a
+autocmd BufWinEnter *.ts,*.tsx call MarkTsImports()
+
+function! MarkTsImports()
+  exe "silent!normal! mm?^import \<cr>mi`m"
+endfunction
+autocmd FileType typescript nnoremap ,ii mp"yyiw`ioimport { <c-r>y } from '';<esc>ba
+autocmd FileType typescript nnoremap ,ia mp"yyiw`ioimport * as <c-r>y from '<c-r>y';<esc>ba
+autocmd filetype typescript let b:dispatch =getcwd() . '/node_modules/.bin/tsc\ --noEmit\ --p\ ./tsconfig.json'
+autocmd filetype typescript setlocal makeprg=./node_modules/.bin/tsc\ --noEmit\ --p\ ./tsconfig.json
+autocmd FileType typescript setlocal completeopt+=preview,menu
+
 
 autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
 let g:jsdoc_allow_input_prompt = 0
@@ -414,6 +474,7 @@ nnoremap <leader>gd :Gvdiff<CR>
 "" YCM
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:loaded_youcompleteme = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -426,25 +487,15 @@ nnoremap <leader>gd :Gvdiff<CR>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-n>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltisnipsSnippetDirectory=["UltiSnips", "custom-snippets"]
 let g:UltiSnipsEditSplit="vertical"
 
 
-" function! g:UltiSnips_Complete()
-"   call UltiSnips#ExpandSnippet()
-"   if g:ulti_expand_res == 0
-"     if pumvisible()
-"       return "\<C-n>"
-"     else
-"       call UltiSnips#JumpForwards()
-"       if g:ulti_jump_forwards_res == 0
-"         return "\<TAB>"
-"       endif
-"     endif
-"   endif
-"   return ""
-" endfunction
-" au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
 autocmd FileType typescript setlocal commentstring=//\ %s
+
+""""
+" python
+"""""
+autocmd FileType python let g:jedi#goto_command = "<c-]>"
+

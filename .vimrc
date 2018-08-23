@@ -21,9 +21,11 @@ Plug 'moll/vim-node'
 Plug 'ternjs/tern_for_vim'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'pangloss/vim-javascript'
-Plug 'othree/yajs.vim'
+Plug 'mxw/vim-jsx'
 Plug 'othree/es.next.syntax.vim'
-Plug 'mklabs/mdn.vim'
+Plug 'isRuslan/vim-es6'
+" nvim only
+" Plug 'mklabs/mdn.vim'
 
 " Typescript
 Plug 'HerringtonDarkholme/yats.vim'
@@ -53,13 +55,13 @@ Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
 Plug 'lumiliet/vim-twig'
 " css
 Plug 'ap/vim-css-color'
+Plug 'cakebaker/scss-syntax.vim'
 
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sjl/gundo.vim'
-Plug 'mhinz/vim-signify'
 Plug 'scrooloose/syntastic'
 Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
@@ -67,13 +69,22 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'chrisbra/Recover.vim'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'Chiel92/vim-autoformat'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'FelikZ/ctrlp-py-matcher'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'terryma/vim-multiple-cursors'
+
+"format
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
+Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install' }
+Plug 'chrisbra/NrrwRgn'
 
 call plug#end()
 
@@ -118,15 +129,14 @@ set backspace=indent,eol,start  " like normal backspace
 set fixeol
 set shiftwidth=2     " indent also with 4 spaces
 set expandtab        " expand tabs to spaces
-set textwidth=120
-set colorcolumn=120
+set textwidth=80
+set colorcolumn=80
 set fo+=t
 set fo-=l
 set t_Co=256
 filetype plugin indent on
 syntax on
 set number
-set relativenumber
 set showmatch
 set comments=sl:/*,mb:\ *,elx:\ */
 set wildmode=longest:full
@@ -147,7 +157,9 @@ set noerrorbells         " don't beep
 set nobackup
 set nowb
 set directory=/var/tmp/
-set noesckeys
+set esckeys
+set timeoutlen=1000 ttimeoutlen=0
+
 set omnifunc=syntaxcomplete#Complete
 
 " no ex mode
@@ -163,6 +175,7 @@ set magic
 
 "switch paste mode
 set pastetoggle=<F2>
+
 
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
@@ -192,8 +205,10 @@ set path=.,../,,**
 " Always show the status line
 set laststatus=2
 
-map <F9> :wa <bar> lclose <bar> Make! <cr>
+map <F8> :w <bar> cclose <bar> lopen <cr>
+map <F9> :lclose <bar> Make! <cr>
 nnoremap ,r :Copen<cr>
+nnoremap ,q :cclose <bar> lclose<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -205,10 +220,6 @@ vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
 vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
 
 nnoremap <leader>h :e~/.vim/help<cr>
-
-" replace word
-nnoremap X ciw
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Windows explore
@@ -238,10 +249,6 @@ noremap <leader>< 20<C-W><
 " faster scrolling
 nnoremap <C-E> 5<C-E>
 nnoremap <C-Y> 5<C-Y>
-
-" buffer nav
-" last buffer
-nnoremap <leader>p :b#<CR>
 
 " quickfix
 nnoremap ]q :cnext<CR>
@@ -276,7 +283,7 @@ function! WrapCommand(direction, prefix)
     endtry
   endif
 endfunction
-autocmd FileType qf wincmd J
+" autocmd FileType qf wincmd J
 
 " <Home> and <End> go up and down the quickfix list and wrap around
 nnoremap <silent> [q :call WrapCommand('up', 'c')<CR>
@@ -323,20 +330,24 @@ let g:airline_mode_map = {
 let g:airline_section_x = "%{expand('%:p:.')}"
 let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
 let g:airline_section_c = "%{expand('%:t')}"
+let g:airline_extensions = []
 
-function! KFormat()
-  let ln = line('.')
-  execute ':Autoformat'
-  execute 'normal! Go'
-  execute 'normal! '.ln.'G'
-endfunction
-noremap <leader>f :Autoformat<cr>
+" noremap <leader>f :Autoformat<cr>
+" noremap <leader>f :FormatCode<cr>
+let g:prettier#exec_cmd_async = 1
+let g:prettier#config#trailing_comma = 'all'
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#arrow_parens = 'always'
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
 "" CtrlP
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <C-b> :CtrlPBuffer<cr>
 " size for response
 let g:ctrlp_max_height = 15
 " reuse cache between sessions
@@ -346,10 +357,11 @@ let g:ctrlp_show_hidden = 1
 " number of files to scan, 0=no limit
 let g:ctrlp_max_files = 0
 " max folder depth
-let g:ctrlp_max_depth = 15
+let g:ctrlp_max_depth = 25
 " opens ctrlp inside current working directory nearest root parent
 let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+let g:ctrlp_extensions = ['dir', 'line']
+"let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
 
 " use the silver searcher
 if executable('ag')
@@ -415,7 +427,7 @@ let g:tern_show_argument_hints='on_hold'
 "" syntastic
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['tsuquyomi']
 let g:syntastic_html_checkers = []
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -429,7 +441,6 @@ let g:syntastic_check_on_wq = 0
 "" javascript/typescript
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:typescript_compiler_binary = 'tsc'
 let g:typescript_compiler_options = ''
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
@@ -437,13 +448,14 @@ let g:tsuquyomi_javascript_support = 1
 let g:tsuquyomi_single_quote_import = 1
 let g:syntastic_typescript_tsc_fname = ''
 let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_completion_preview = 1
+let g:tsuquyomi_completion_preview = 0
 let g:tsuquyomi_use_vimproc = 1
 nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
 inoremap TT <ESC>:echo tsuquyomi#hint()<CR>
 nnoremap <leader>i :TsuImport<CR>
 inoremap II <ESC>:TsuImport<CR>a
 autocmd BufWinEnter *.ts,*.tsx call MarkTsImports()
+autocmd BufWinEnter *.tsx,*.jsx set foldmethod=indent
 
 function! MarkTsImports()
   exe "silent!normal! mm?^import \<cr>mi`m"
@@ -459,6 +471,13 @@ autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
 let g:jsdoc_allow_input_prompt = 0
 let g:jsdoc_input_description = 1
 let g:jsdoc_custom_args_regex_only = 1
+let g:user_emmet_settings = {
+      \  'javascript.jsx' : {
+      \      'extends' : 'jsx',
+      \  },
+      \}
+
+autocmd FileType json nnoremap <buffer> <leader>f :%!python -m json.tool<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""
@@ -488,6 +507,8 @@ let g:loaded_youcompleteme = 1
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsListSnippets="<c-l>"
 let g:UltisnipsSnippetDirectory=["UltiSnips", "custom-snippets"]
 let g:UltiSnipsEditSplit="vertical"
 

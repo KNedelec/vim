@@ -22,8 +22,8 @@ Plug 'ternjs/tern_for_vim'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'othree/es.next.syntax.vim'
 Plug 'isRuslan/vim-es6'
+Plug 'kristijanhusak/vim-js-file-import'
 " nvim only
 " Plug 'mklabs/mdn.vim'
 
@@ -62,7 +62,8 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sjl/gundo.vim'
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
+" Plug 'vim-syntastic/syntastic'
 Plug 'kien/ctrlp.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-unimpaired'
@@ -85,6 +86,7 @@ Plug 'google/vim-glaive'
 Plug 'prettier/vim-prettier', {
       \ 'do': 'yarn install' }
 Plug 'chrisbra/NrrwRgn'
+Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 
@@ -306,6 +308,7 @@ nnoremap <F11> :GundoToggle<CR>
 let g:airline_powerline_fonts = 1
 let g:airline_theme='lucius'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -327,10 +330,9 @@ let g:airline_mode_map = {
       \ 'r': 'R'
       \ }
 
-let g:airline_section_x = "%{expand('%:p:.')}"
-let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
-let g:airline_section_c = "%{expand('%:t')}"
-let g:airline_extensions = []
+" let g:airline_section_x = "%{expand('%:p:.')}"
+ let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
+" let g:airline_section_c = "%{expand('%:t')}"
 
 " noremap <leader>f :Autoformat<cr>
 " noremap <leader>f :FormatCode<cr>
@@ -347,7 +349,7 @@ let g:prettier#config#arrow_parens = 'always'
 "" CtrlP
 ""
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-b> :CtrlPBuffer<cr>
+nnoremap <C-b> :CtrlPTag<cr>
 " size for response
 let g:ctrlp_max_height = 15
 " reuse cache between sessions
@@ -360,8 +362,9 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 25
 " opens ctrlp inside current working directory nearest root parent
 let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_extensions = ['dir', 'line']
+let g:ctrlp_extensions = ['tag', 'dir', 'line']
 "let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
+let g:ctrlp_switch_buffer = 'e'
 
 " use the silver searcher
 if executable('ag')
@@ -426,8 +429,9 @@ let g:tern_show_argument_hints='on_hold'
 ""
 "" syntastic
 ""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_javascript_checkers = ['tsuquyomi']
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 let g:syntastic_html_checkers = []
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -444,7 +448,7 @@ let g:syntastic_check_on_wq = 0
 let g:typescript_compiler_options = ''
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_javascript_support = 1
+let g:tsuquyomi_javascript_support = 0
 let g:tsuquyomi_single_quote_import = 1
 let g:syntastic_typescript_tsc_fname = ''
 let g:tsuquyomi_completion_detail = 1
@@ -452,12 +456,12 @@ let g:tsuquyomi_completion_preview = 0
 let g:tsuquyomi_use_vimproc = 1
 nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
 inoremap TT <ESC>:echo tsuquyomi#hint()<CR>
-nnoremap <leader>i :TsuImport<CR>
-inoremap II <ESC>:TsuImport<CR>a
-autocmd BufWinEnter *.ts,*.tsx call MarkTsImports()
+autocmd filetype typescript nnoremap <leader>i :TsuImport<CR>
+autocmd filetype typescript inoremap II <ESC>:TsuImport<CR>a
+autocmd BufWinEnter *.ts,*.tsx,*.js,*.jsx call MarkJsImports()
 autocmd BufWinEnter *.tsx,*.jsx set foldmethod=indent
 
-function! MarkTsImports()
+function! MarkJsImports()
   exe "silent!normal! mm?^import \<cr>mi`m"
 endfunction
 autocmd FileType typescript nnoremap ,ii mp"yyiw`ioimport { <c-r>y } from '';<esc>ba
@@ -476,6 +480,10 @@ let g:user_emmet_settings = {
       \      'extends' : 'jsx',
       \  },
       \}
+let g:jsx_ext_required = 1
+let g:javascript_plugin_flow = 1
+autocmd filetype javascript inoremap II <esc>:JsFileImport<cr>a
+autocmd filetype javascript nnoremap <leader>i :JsFileImport<cr>
 
 autocmd FileType json nnoremap <buffer> <leader>f :%!python -m json.tool<CR>
 

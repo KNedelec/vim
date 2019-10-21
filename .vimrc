@@ -1,158 +1,67 @@
-" VIM Configuration File
-" :let $VIMRUNTIME = "/usr/local/share/vim/vim80"
-
-set nocompatible
-
-"""""""""""""""""""""""""""""""""""""""
 "
-"  Plugin managers
+" VIM CONFIGURATION
 "
-"""""""""""""""""""""""""""""""""""""""
 
-" set the runtime path to include Vundle and initialize
-call plug#begin('~/.vim/plugged')
+let VIM_HOME = $HOME . '/.vim/'
+set nocp hid ru nosol list ai si fixeol et nu
 
-" ColorScheme
+call plug#begin('~/vim/plugged')
+" Theme
 Plug 'jonathanfilip/vim-lucius'
-Plug 'altercation/vim-colors-solarized'
 
-" js
-Plug 'moll/vim-node'
-Plug 'ternjs/tern_for_vim'
-Plug 'carlitux/deoplete-ternjs'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'isRuslan/vim-es6'
-Plug 'kristijanhusak/vim-js-file-import'
-" nvim only
-" Plug 'mklabs/mdn.vim'
-
-" Typescript
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'Quramy/tsuquyomi'
+"Plug 'vim-python/python-syntax'
 Plug 'leafgarland/typescript-vim'
 
-" Python
-Plug 'davidhalter/jedi'
-Plug 'davidhalter/jedi-vim'
-Plug 'zchee/deoplete-jedi'
-
-" git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
+" improved netrw
 Plug 'tpope/vim-vinegar'
 
-" html
-Plug 'mattn/emmet-vim'
-Plug 'othree/html5.vim'
-" json
-Plug 'elzr/vim-json'
-" pug
-Plug 'digitaltoad/vim-pug'
-Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
-" twig
-Plug 'lumiliet/vim-twig'
-" css
-Plug 'ap/vim-css-color'
-Plug 'cakebaker/scss-syntax.vim'
-
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'sjl/gundo.vim'
-Plug 'w0rp/ale'
-" Plug 'vim-syntastic/syntastic'
+" ctrlp
 Plug 'kien/ctrlp.vim'
-Plug 'mileszs/ack.vim'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'chrisbra/Recover.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'FelikZ/ctrlp-py-matcher'
-Plug 'Quramy/vim-js-pretty-template'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'terryma/vim-multiple-cursors'
 
-"format
-Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-Plug 'google/vim-glaive'
-Plug 'prettier/vim-prettier', {
-      \ 'do': 'yarn install' }
-Plug 'chrisbra/NrrwRgn'
-Plug 'ludovicchabant/vim-gutentags'
+"
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""
-"
-"  Basic settings
-"
-"""""""""""""""""""""""""""""""""""""""
-
-"
-" Theme
-"
-set background=dark
-colorscheme lucius "wombat256, solarized
-" day mode
-nnoremap <leader>N :set background=dark<CR>
-" night mode
-nnoremap <leader>n :set background=light<CR>
-
-"
 " Vimrc - Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :vs $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+nnoremap <leader>w :w<cr>
+nnoremap <leader>q :q<cr>
 
-"
-" Fast saving
-nmap <leader>w :w!<cr>
-nmap <leader>x :x!<cr>
-nnoremap <leader>r :w!<cr> :execute '!sshpass -p "vagrant" scp -r ' . expand('%:h') . '/. vagrant@10.0.0.2:/var/www/' .  expand('%:h') . '/'<cr> :redraw!<cr>
-
-"
-" Basic stuff
+colorscheme lucius
+set background=dark
 set enc=utf-8
 set fenc=utf-8
 set termencoding=utf-8
-set autoindent
-set smartindent
-set tabstop=2        " tab width is 4 spaces
-set backspace=indent,eol,start  " like normal backspace
-set fixeol
-set shiftwidth=2     " indent also with 4 spaces
-set expandtab        " expand tabs to spaces
-set textwidth=80
-set colorcolumn=80
-set fo+=t
-set fo-=l
+set tabstop=2
+set expandtab
+set backspace=indent,eol,start
+set shiftwidth=2
 set t_Co=256
-filetype plugin indent on
-syntax on
-set number
 set showmatch
-set comments=sl:/*,mb:\ *,elx:\ */
-set wildmode=longest:full
+set wildmode=list:full
 set wildmenu
-set nosol       " prevent vim to change column when jumping
-set shm=at      " short vim messaged
-set hidden
-set list listchars=tab:»·,trail:· " display tabs and trailing whitespaces
-set scrolloff=5   " always keep 5 lines visible above/below cursor
-syntax sync minlines=256 "scroll perf
-set history=1000         " remember more commands and search history
-set undolevels=1000      " use many muchos levels of undo
+set bs=2
+set fo+=ctrq
+set ls=2
+set tw=80
+set lcs-=eol:$
+set lcs+=tab:>-
+set lcs+=trail:·
+set shm=at
+set scrolloff=5
+set sidescrolloff=5
+syntax sync minlines=256 " scroll perf
+set history=1000
+set undolevels=1000
 set undofile
-set undodir="$HOME/.vim_undo"
+set undodir="$HOME/.vim/.vim_undo"
 set wildignore=*.swp,*.bak,plugins,*/app/cache/*,*/node_modules,*/dist/*,*/vendor
 set title                " change the terminal's title
 set noerrorbells         " don't beep
@@ -160,225 +69,62 @@ set nobackup
 set nowb
 set directory=/var/tmp/
 set esckeys
-set timeoutlen=1000 ttimeoutlen=0
+set ttimeout
+set ttimeoutlen=50
+set colorcolumn=81
+set completeopt=menuone,preview
+set cursorline
+set formatoptions-=t
 
-set omnifunc=syntaxcomplete#Complete
+syntax on
+filetype plugin indent on
 
-" no ex mode
-nnoremap Q <nop>
+" autocmd QuickFixCmdPost [^l]* nested cwindow
+" autocmd QuickFixCmdPost    l* nested lwindow
 
-"
+nnoremap Q <nop> " no ex mode
+
 " Search
 set hlsearch      " highlight search terms
 set incsearch     " show search matches as you type
 set ignorecase
 set smartcase
 set magic
+nnoremap gr :exe "Ack '<C-R><C-W>'"<CR>
 
-"switch paste mode
+" switch paste mode
 set pastetoggle=<F2>
-
 
 " Treat long lines as break lines (useful when moving around in them)
 nnoremap j gj
 nnoremap k gk
 
-" delete to black hole register
-nmap D "_d
-
-" js function  auto close
-inoremap <expr> {} nr2char(getchar())
-inoremap <expr> {}<space> "{}"
-inoremap <expr> {}<cr> "{<cr>}<ESC>O"
-inoremap <expr> {}} "{<cr>};<ESC>O"
-inoremap <expr> {}{ "{<cr>},<ESC>O"
-inoremap <expr> {}o "{<cr>})<ESC>O"
-inoremap <expr> {}p "{<cr>});<ESC>O"
-inoremap (ff (function (){<cr>});<ESC>O
-
-"
 " folding
 set foldmethod=syntax
 set foldlevel=6
 
-" path is path with siblings and current
-set path=.,../,,**
+command Smake execute "silent make | redraw!"
 
-" Always show the status line
-set laststatus=2
-
-map <F8> :w <bar> cclose <bar> lopen <cr>
-map <F9> :lclose <bar> Make! <cr>
-nnoremap ,r :Copen<cr>
-nnoremap ,q :cclose <bar> lclose<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Move a line of text using leader+[jk]
-nmap <leader>j mz:m+<cr>`z
-nmap <leader>k mz:m-2<cr>`z
-vmap <leader>j :m'>+<cr>`<my`>mzgv`yo`z
-vmap <leader>k :m'<-2<cr>`>my`<mzgv`yo`z
-
-nnoremap <leader>h :e~/.vim/help<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Windows explore
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" use the silver searcher
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
+map <C-j> <C-W>w
+map <C-k> <C-W>W
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<CR>
+map <leader>tn :tabnext<CR>
 map <leader>to :tabonly<CR>
 map <leader>tm :tabmove<CR>
 map <leader>tc :tabclose<CR>
 
-noremap <leader>ex :Vexplore<CR>
-noremap <leader>q :q<CR>
-noremap <leader>= 10<C-W>+
-noremap <leader>- 10<C-W>-
-noremap <leader>> 20<C-W>>
-noremap <leader>< 20<C-W><
-
-
-" faster scrolling
-nnoremap <C-E> 5<C-E>
-nnoremap <C-Y> 5<C-Y>
-
-" quickfix
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprev<CR>
-
-"""""""""""""""""""""""""""""
-"
-" => SEARCH
-"
-"""""""""""""""""""""""""""""
-nnoremap gr :exe "Ack '<C-R><C-W>'"<CR>
-
-
-"""""""""""""""""""""""""""""
-" => quickfix
-"""""""""""""""""""""""""""""
-" wrap :cnext/:cprevious and :lnext/:lprevious
-function! WrapCommand(direction, prefix)
-  if a:direction == "up"
-    try
-      execute a:prefix . "previous"
-    catch /^Vim\%((\a\+)\)\=:E553/
-      execute a:prefix . "last"
-    catch /^Vim\%((\a\+)\)\=:E\%(776\|42\):/
-    endtry
-  elseif a:direction == "down"
-    try
-      execute a:prefix . "next"
-    catch /^Vim\%((\a\+)\)\=:E553/
-      execute a:prefix . "first"
-    catch /^Vim\%((\a\+)\)\=:E\%(776\|42\):/
-    endtry
-  endif
-endfunction
-" autocmd FileType qf wincmd J
-
-" <Home> and <End> go up and down the quickfix list and wrap around
-nnoremap <silent> [q :call WrapCommand('up', 'c')<CR>
-nnoremap <silent> ]q  :call WrapCommand('down', 'c')<CR>
-
-" <C-Home> and <C-End> go up and down the location list and wrap around
-nnoremap <silent> [l :call WrapCommand('up', 'l')<CR>
-nnoremap <silent> ]l  :call WrapCommand('down', 'l')<CR>
-
-"""""""""""""""""""""""""""""
-"" Gundo
-"""""""""""""""""""""""""""""
-let g:gundo_prefer_python3 = 1
-nnoremap <F11> :GundoToggle<CR>
-
-
-"""""""""""""""""""""""""""""
-"" Airline
-"""""""""""""""""""""""""""""
-let g:airline_powerline_fonts = 1
-let g:airline_theme='lucius'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#syntastic#enabled = 1
-
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tabline#tab_nr_type = 2
-
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#fnamemod = ':.'
-
-let g:airline#extensions#tabline#left_sep = '  '
-let g:airline#extensions#tabline#left_alt_sep = '  '
-let g:airline#extensions#tabline#right_sep = ' '
-let g:airline#extensions#tabline#right_alt_sep = ' '
-
-let g:airline_mode_map = {
-      \ 'n': 'N',
-      \ 'i': 'I',
-      \ 'v': 'v',
-      \ 'V': 'V',
-      \ 'r': 'R'
-      \ }
-
-" let g:airline_section_x = "%{expand('%:p:.')}"
- let g:airline_section_y = "%{fnamemodify(getcwd(), ':t')}"
-" let g:airline_section_c = "%{expand('%:t')}"
-
-" noremap <leader>f :Autoformat<cr>
-" noremap <leader>f :FormatCode<cr>
-let g:prettier#exec_cmd_async = 1
-let g:prettier#config#trailing_comma = 'all'
-let g:prettier#config#single_quote = 'true'
-let g:prettier#config#bracket_spacing = 'true'
-let g:prettier#config#arrow_parens = 'always'
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" CtrlP
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <C-b> :CtrlPTag<cr>
-" size for response
-let g:ctrlp_max_height = 15
-" reuse cache between sessions
-let g:ctrlp_clear_cache_on_exit = 0
-" search inside hidden files and folders
-let g:ctrlp_show_hidden = 1
-" number of files to scan, 0=no limit
-let g:ctrlp_max_files = 0
-" max folder depth
-let g:ctrlp_max_depth = 25
-" opens ctrlp inside current working directory nearest root parent
-let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_extensions = ['tag', 'dir', 'line']
-"let g:ctrlp_extensions = ['tag', 'buffertag', 'dir']
-let g:ctrlp_switch_buffer = 'e'
-
-" use the silver searcher
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ackprg = 'ag --vimgrep'
-endif
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-set wildmode=list:full
-set wildignore+=*node_modules/**
-set wildignore+=*dist/**
-set wildignore=*.o,*.obj,*~
+set wildignore+=*.o,*.obj,*~
+set wildignore+=*node_modules/**,*dist/**,*sass-cache*
 set wildignore+=*vim/backups*
-set wildignore+=*sass-cache*
 set wildignore+=*cache*
 set wildignore+=*logs*
 set wildignore+=*DS_Store*
@@ -387,144 +133,36 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" C++
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tags=tags,./tags
+
+" ctrl-p
+let g:ctrlp_cmd = 'CtrlPMixed'
+" reuse cache between sessions
+let g:ctrlp_clear_cache_on_exit = 0
+" search inside hidden files and folders
+let g:ctrlp_show_hidden = 1
+" number of files to scan, 0=no limit
+let g:ctrlp_max_files = 0
+" max folder depth
+let g:ctrlp_max_depth = 25
+let g:ctrlp_extensions = ['tag']
+"let g:ctrlp_working_path_mode = '0'
+let g:ctrlp_working_path_mode = 'rx'
+
+
+autocmd FileType typescript :set makeprg=./node_modules/.bin/tsc\ --noEmit\ %
+
 "
-"set tags+=~/.vim/tags/cpp
-"set tags+=~/.vim/tags/gl
-"set tags+=~/.vim/tags/sdl
-"set tags+=~/.vim/tags/qt4
-"set tags+=~/work/sidust/tags
-"set tags+=~/work/opcua/tags
-"set tags+=~/work/Performance_4149/miniweb/tags
+" Tags
+"
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" Indent guides
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-let g:indent_guides_auto_colors = 1
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
-
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" tern vim
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>td :TernDef<CR>
-nnoremap <leader>th :TernDoc<CR>
-nnoremap <leader>tr :TernRefs<CR>
-nnoremap <leader>te :TernRename<CR>
-nnoremap <leader>tt :TernType<CR>
-let g:tern_show_argument_hints='on_hold'
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" syntastic
-""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
-let g:syntastic_html_checkers = []
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_loc_list_height = 5
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" javascript/typescript
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:typescript_compiler_options = ''
-let g:syntastic_typescript_checkers = ['tsuquyomi']
-let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_javascript_support = 0
-let g:tsuquyomi_single_quote_import = 1
-let g:syntastic_typescript_tsc_fname = ''
-let g:tsuquyomi_completion_detail = 1
-let g:tsuquyomi_completion_preview = 0
-let g:tsuquyomi_use_vimproc = 1
-nnoremap <Leader>t :echo tsuquyomi#hint()<CR>
-inoremap TT <ESC>:echo tsuquyomi#hint()<CR>
-autocmd filetype typescript nnoremap <leader>i :TsuImport<CR>
-autocmd filetype typescript inoremap II <ESC>:TsuImport<CR>a
-autocmd BufWinEnter *.ts,*.tsx,*.js,*.jsx call MarkJsImports()
-autocmd BufWinEnter *.tsx,*.jsx set foldmethod=indent
-
-function! MarkJsImports()
-  exe "silent!normal! mm?^import \<cr>mi`m"
-endfunction
-autocmd FileType typescript nnoremap ,ii mp"yyiw`ioimport { <c-r>y } from '';<esc>ba
-autocmd FileType typescript nnoremap ,ia mp"yyiw`ioimport * as <c-r>y from '<c-r>y';<esc>ba
-autocmd filetype typescript let b:dispatch =getcwd() . '/node_modules/.bin/tsc\ --noEmit\ --p\ ./tsconfig.json'
-autocmd filetype typescript setlocal makeprg=./node_modules/.bin/tsc\ --noEmit\ --p\ ./tsconfig.json
-autocmd FileType typescript setlocal completeopt+=preview,menu
-
-
-autocmd FileType javascript,typescript nnoremap <buffer> <leader>d :JsDoc<CR>
-let g:jsdoc_allow_input_prompt = 0
-let g:jsdoc_input_description = 1
-let g:jsdoc_custom_args_regex_only = 1
-let g:user_emmet_settings = {
-      \  'javascript.jsx' : {
-      \      'extends' : 'jsx',
-      \  },
-      \}
-let g:jsx_ext_required = 1
-let g:javascript_plugin_flow = 1
-autocmd filetype javascript inoremap II <esc>:JsFileImport<cr>a
-autocmd filetype javascript nnoremap <leader>i :JsFileImport<cr>
-
-autocmd FileType json nnoremap <buffer> <leader>f :%!python -m json.tool<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" Fugitive
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>gs :Gstatus<CR>10<C-W>+
-nnoremap <leader>gd :Gvdiff<CR>
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" YCM
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:loaded_youcompleteme = 1
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""
-"" Snippets
-""
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Track the engine.
-
-" Snippets are separated from the engine. Add this if you want them:
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsListSnippets="<c-l>"
-let g:UltisnipsSnippetDirectory=["UltiSnips", "custom-snippets"]
-let g:UltiSnipsEditSplit="vertical"
-
-
-autocmd FileType typescript setlocal commentstring=//\ %s
-
-""""
-" python
-"""""
-autocmd FileType python let g:jedi#goto_command = "<c-]>"
+" take .ctags from vim folder
+let ct = "silent !ctags --options=".VIM_HOME.".ctags"
+" execute ctags with libs, see ftplugins, default is ctags
+if !exists(":Cta")
+  command Cta execute(ct) | execute("redraw!")
+endif
+if !exists(":Ct")
+  command Ct execute(ct) | execute("redraw!")
+endif
 

@@ -11,6 +11,9 @@ Plug 'jonathanfilip/vim-lucius'
 
 "Plug 'vim-python/python-syntax'
 Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'mattn/emmet-vim'
 
 " improved netrw
 Plug 'tpope/vim-vinegar'
@@ -136,7 +139,7 @@ set wildignore+=*.png,*.jpg,*.gif
 set tags=tags,./tags
 
 " ctrl-p
-let g:ctrlp_cmd = 'CtrlPMixed'
+" let g:ctrlp_cmd = 'CtrlPMixed'
 " reuse cache between sessions
 let g:ctrlp_clear_cache_on_exit = 0
 " search inside hidden files and folders
@@ -147,22 +150,10 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 25
 let g:ctrlp_extensions = ['tag']
 "let g:ctrlp_working_path_mode = '0'
-let g:ctrlp_working_path_mode = 'rx'
+let g:mainmainctrlp_working_path_mode = '0'
 
 
 autocmd FileType typescript :set makeprg=./node_modules/.bin/tsc\ --noEmit\ %
 
-"
-" Tags
-"
-
-" take .ctags from vim folder
-let ct = "silent !ctags --options=".VIM_HOME.".ctags"
-" execute ctags with libs, see ftplugins, default is ctags
-if !exists(":Cta")
-  command Cta execute(ct) | execute("redraw!")
-endif
-if !exists(":Ct")
-  command Ct execute(ct) | execute("redraw!")
-endif
-
+" mappings
+imap {<CR> {<CR>}<esc>O

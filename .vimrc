@@ -150,7 +150,7 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 25
 let g:ctrlp_extensions = ['tag']
 "let g:ctrlp_working_path_mode = '0'
-let g:mainmainctrlp_working_path_mode = '0'
+let g:ctrlp_working_path_mode = '0'
 
 
 autocmd FileType typescript :set makeprg=./node_modules/.bin/tsc\ --noEmit\ %

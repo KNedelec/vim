@@ -29,6 +29,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 
+" textobjs
+Plug 'wellle/targets.vim'
+
 call plug#end()
 
 " Vimrc - Quickly edit/reload the vimrc file
@@ -156,4 +159,5 @@ let g:ctrlp_working_path_mode = '0'
 autocmd FileType typescript :set makeprg=./node_modules/.bin/tsc\ --noEmit\ %
 
 " mappings
-imap {<CR> {<CR>}<esc>O
+inoremap {<CR> {<CR>}<esc>O
+inoremap ({<CR> ({<CR>})<esc>O

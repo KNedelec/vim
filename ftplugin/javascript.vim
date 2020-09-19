@@ -1,8 +1,9 @@
 
+let b:ale_fixers = ['prettier', 'eslint']
+let b:ale_linters = ['eslint']
 
-let VIM_HOME = $HOME . '/.vim/'
-let cmda = "silent !find . -name \"*.js\" | xargs ctags --options=".VIM_HOME.".ctags"
-let cmd = "silent !find . -name \"*.js\" | grep -v node_modules | xargs ctags --options=".VIM_HOME.".ctags"
-command! Cta execute(cmda) | execute("redraw!")
-command! Ct execute(cmd) | execute("redraw!")
+let b:ale_fix_on_save = 1
 
+setlocal tags=jstags,.git/jstags
+
+command! -nargs=* Ak :execute "Ack --ignore-dir={node_modules,build} --type=js " . string(<q-args>)

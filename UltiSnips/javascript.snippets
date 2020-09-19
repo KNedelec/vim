@@ -1,0 +1,132 @@
+
+snippet "[ ]" "[\n]" i
+[
+  ${1:${VISUAL}}
+]
+endsnippet
+
+snippet [] "[]" i
+[${1:${VISUAL}}]
+endsnippet
+
+snippet {} "{}" i
+{${1:${VISUAL}}}
+endsnippet
+
+snippet "{ }" "{\n}" i
+{
+  ${1:${VISUAL}}
+}
+endsnippet
+
+snippet ret "return {\n}" i
+return {
+	${1:${VISUAL}}
+}
+endsnippet
+
+snippet try "try" b
+try {
+  ${1:${VISUAL}}
+} catch (e) {${2}}
+endsnippet
+
+snippet conse "console.error" b
+console.error('${1:${VISUAL}}')
+endsnippet
+
+snippet conso "console.log" b
+console.log('${1:${VISUAL}}')
+endsnippet
+
+snippet consv "console.log var" b
+console.log('${1:${VISUAL:var}}', $1)
+endsnippet
+
+snippet reg "const regex" b
+const ${1} = /${2}/g
+endsnippet
+
+snippet call "Call function" i
+${1}(${2:${VISUAL}})
+endsnippet
+
+snippet co "const" b
+const ${1} = ${2:${VISUAL}}
+endsnippet
+
+snippet cc "const with comment" b
+// ${1}
+const ${2} = ${3:${VISUAL}}
+endsnippet
+
+snippet fu "() => " i
+${1} => ${2:${VISUAL}}
+endsnippet
+
+snippet Fu "() => " i
+function ${1} {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet F* "() => " i
+function* ${1} {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet ff "() => {}" i
+${1} => {
+	${2:${VISUAL}}
+}
+endsnippet
+
+snippet cF "const x = ()" b
+/*
+ * ${1}
+ */
+const ${2} = ${3} => {
+  ${0:${VISUAL}}
+}
+endsnippet
+
+snippet cf "const x = ()" b
+const ${1} = ${2} => {
+  ${0:${VISUAL}}
+}
+endsnippet
+
+snippet expcf "export const x = () => {}" b
+/*
+ * ${1}
+ */
+export const ${2} = ${3} => {
+  ${0:${VISUAL}}
+}
+endsnippet
+
+snippet expcfr "export const x = () => ({})" b
+/*
+ * ${1}
+ */
+export const ${2} = ${3} => ({
+  ${0:${VISUAL}}
+})
+endsnippet
+
+snippet whi "while {}" b
+while (${1}) {
+  ${2:${VISUAL}}
+}
+endsnippet
+
+snippet thro "throw" i
+throw new Error(${1:`${VISUAL}`})
+endsnippet
+
+snippet desc "describe(() => {})" b
+describe('${1}', () => {
+  ${0:${VISUAL}}
+})
+endsnippet
